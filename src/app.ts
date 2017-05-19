@@ -3,6 +3,8 @@
 import * as express from "express";
 import * as path from "path";
 
+import { HealthChecker } from "./healthcheck/HealthChecker";
+
 class Server {
 
   public app: express.Application;
@@ -25,6 +27,7 @@ class Server {
     })
 
     this.app.use('/', router);
+    this.app.use('/health', new HealthChecker().router);
   }
 
 }
