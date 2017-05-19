@@ -3,7 +3,7 @@ import { HealthStatus } from "./HealthStatus";
 
 import * as mongoose from "mongoose";
 
-class MongooseHealthCheck implements HealthCheckService {
+class MongooseServiceChecker implements HealthCheckService {
 
   private connection: mongoose.Connection;
 
@@ -22,4 +22,4 @@ class MongooseHealthCheck implements HealthCheckService {
 
 }
 
-export { MongooseHealthCheck };
+export { MongooseServiceChecker };

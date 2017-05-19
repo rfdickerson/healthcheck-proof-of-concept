@@ -4,5 +4,4 @@ interface HealthCheckService {
   handleCheck(): HealthStatus
 }
 
-
 export {HealthCheckService}

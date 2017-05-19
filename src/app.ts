@@ -2,8 +2,13 @@
 
 import * as express from "express";
 import * as path from "path";
+import * as mongoose from "mongoose";
 
 import { HealthChecker } from "./healthcheck/HealthChecker";
+import { MongooseServiceChecker } from "./healthcheck/MongooseServiceChecker";
+
+mongoose.connect('mongodb://localhost/healthcheck');
+
 
 class Server {
 
@@ -27,7 +32,12 @@ class Server {
     })
 
     this.app.use('/', router);
-    this.app.use('/health', new HealthChecker().router);
+
+    let healthChecker = new HealthChecker();
+    let mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
+
+    healthChecker.register("mongo", mongoDBCheck);
+    this.app.use('/health', healthChecker.router);
   }
 
 }
