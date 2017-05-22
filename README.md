@@ -14,20 +14,32 @@ Add the following to your ExpressJS application:
 
 ```typescript
 import { HealthChecker } from "./healthcheck/HealthChecker";
-import { MongooseServiceChecker } from "./healthcheck/MongooseServiceChecker";
 ```
 
 The following example uses the Mongoose health checker against the MongoDB database connection.
 
 ```typescript
 const healthChecker = new HealthChecker();
-const mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
 
-healthChecker.register("mongo", mongoDBCheck);
 this.app.use("/health", healthChecker.router);
 ```
 
-## Health Checking
+## Health Checking Services
+
+Import the service checker for the service you want to check such as MongoDB, Redis, PostgreSQL, etc.:
+
+```typescript
+import { MongooseServiceChecker } from "./healthcheck/MongooseServiceChecker";
+```
+
+Add the checker before the health check is invoked:
+
+```typescript
+const mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
+healthChecker.register("mongo", mongoDBCheck);
+```
+
+## Health Checking Status
 
 All applications must return the following basic payload at the registered health route:
 
@@ -37,7 +49,7 @@ All applications must return the following basic payload at the registered healt
 }
 ```
 
-When other services are registered on the health checker, the following information can appear.
+For more advanced cases, such as when other services are registered on the health checker, the following information can appear:
 
 ```json
 {
@@ -51,11 +63,15 @@ When other services are registered on the health checker, the following informat
         "username": "XXX",
         "password": "XXX"
       }
+    "redis":
+      {
+        "state: "UP"
+      }
   }
 }
 ```
 
-When there is an error, or a DOWN state, normally, the payload will contain an error message:
+When there is an error, or a DOWN state, the payload will typically contain an error message:
 
 ```json
 {
