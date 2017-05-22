@@ -21,6 +21,7 @@
     "@types/mongodb": "^2.2.2",
     "@types/mongoose": "^4.7.13",
     "mocha": "^3.4.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "typescript": "^2.3.2"
   }
 }
