@@ -12,12 +12,12 @@ class MongooseServiceChecker implements HealthCheckService {
   }
 
   public handleCheck(): HealthStatus {
-    let state = this.connection.readyState;
+    const state = this.connection.readyState;
     console.log(state);
 
     return {
-      state: "connected"
-    }
+      state: "connected",
+    };
   }
 
 }
