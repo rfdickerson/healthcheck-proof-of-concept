@@ -88,3 +88,11 @@ The state can take the following values:
 - **DISCONNECTING**: Currently moving from the UP state to DOWN state by disconnecting the network.
 
 Uptime is in milliseconds. 
+
+## LICENSE
+
+IBM HealthCheck
+Copyright 2017 IBM
+
+This product includes software developed at
+[IBM](http://www.ibm.com/).
