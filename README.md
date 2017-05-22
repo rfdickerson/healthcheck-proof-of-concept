@@ -65,7 +65,7 @@ For more advanced cases, such as when other services are registered on the healt
       },
     "redis":
       {
-        "state: "UP"
+        "state": "UP"
       }
   }
 }
