@@ -5,9 +5,8 @@
   "main": "js/index.js",
   "scripts": {
     "build": "tsc",
-    "pretest": "tsc ts/test/*.ts",
     "start-dev": "tsc -w && nodemon built/app.js",
-    "test": "mocha"
+    "test": "mocha js/test"
   },
   "repository": {
     "type": "git",
