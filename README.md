@@ -46,10 +46,10 @@ When other services are registered on the health checker, the following informat
   "services": {
     "mongodb":
       {
-        state: "UP"
-        host: "mongo",
-        username: "XXX",
-        password: "XXX"
+        "state": "UP",
+        "host": "mongo",
+        "username": "XXX",
+        "password": "XXX"
       }
   }
 }
