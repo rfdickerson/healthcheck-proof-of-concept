@@ -13,6 +13,7 @@ class HealthChecker {
   constructor() {
     this.router = express.Router();
     this.startTime = Date.now();
+    this.services = [];
 
     this.setupRoutes();
   }
