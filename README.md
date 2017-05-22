@@ -62,7 +62,7 @@ For more advanced cases, such as when other services are registered on the healt
         "host": "mongo",
         "username": "XXX",
         "password": "XXX"
-      }
+      },
     "redis":
       {
         "state: "UP"
