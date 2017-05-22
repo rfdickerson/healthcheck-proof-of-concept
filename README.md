@@ -1,4 +1,4 @@
-# Health Checker
+# Health Checker [![Build Status](https://travis-ci.org/rfdickerson/healthcheck-proof-of-concept.svg?branch=master)](https://travis-ci.org/rfdickerson/healthcheck-proof-of-concept)
 
 A proof-of-concept library for ExpressJS-based applications to add a health checking endpoint and provide a payload with the application's health check status.
 
