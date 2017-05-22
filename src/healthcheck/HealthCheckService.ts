@@ -1,7 +1,7 @@
-import { HealthStatus } from "./HealthStatus";
+import { IHealthStatus } from "./HealthStatus";
 
-interface HealthCheckService {
-  handleCheck(): HealthStatus
+interface IHealthCheckService {
+  handleCheck(): IHealthStatus;
 }
 
-export {HealthCheckService}
+export {IHealthCheckService};

@@ -1,8 +1,8 @@
 
-interface HealthStatus {
+interface IHealthStatus {
   state: string;
   upTime?: number;
-  services?: [string, HealthStatus];
+  services?: [string, IHealthStatus];
 }
 
-export { HealthStatus }
+export { IHealthStatus };

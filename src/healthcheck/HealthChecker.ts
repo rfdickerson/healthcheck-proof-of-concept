@@ -1,45 +1,43 @@
 import * as express from "express";
 
-import { HealthCheckService } from "./HealthCheckService";
-import { HealthStatus } from "./HealthStatus";
+import { IHealthCheckService } from "./HealthCheckService";
+import { IHealthStatus } from "./HealthStatus";
 
 class HealthChecker {
 
-  private startTime: number
   public router: express.Router;
+  private startTime: number;
 
-  private services: {String, HealthCheckService}[];
+  private services: {string, HealthCheckService};
 
   constructor() {
     this.router = express.Router();
     this.startTime = Date.now();
-    this.services = [];
 
     this.setupRoutes();
   }
 
+  public register(name: string, checker: IHealthCheckService) {
+    this.services[name] = checker;
+  }
+
   private setupRoutes() {
-    this.router.get('/', (req, res, next) => {
+    this.router.get("/", (req, res, next) => {
 
-      let upTime = Date.now() - this.startTime;
+      const upTime = Date.now() - this.startTime;
 
-      let servicesStatus = this.services.map( (s) => {
-
+      const servicesStatus = Object.keys(this.services).map( (s) => {
+        return [];
       });
 
-
-      let status: HealthStatus = { 
-        state: 'UP',
-        upTime: upTime 
-      }
+      const status: IHealthStatus = {
+        state: "UP",
+        upTime,
+      };
 
       res.status(200);
       res.json(status);
     });
-  }
-
-  public register(name: string, checker: HealthCheckService) {
-    this.services[name] = checker;
   }
 
 }

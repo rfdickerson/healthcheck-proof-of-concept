@@ -1,9 +1,9 @@
-import { HealthCheckService } from "./HealthCheckService";
-import { HealthStatus } from "./HealthStatus";
+import { IHealthCheckService } from "./HealthCheckService";
+import { IHealthStatus } from "./HealthStatus";
 
 import * as mongoose from "mongoose";
 
-class MongooseServiceChecker implements HealthCheckService {
+class MongooseServiceChecker implements IHealthCheckService {
 
   private connection: mongoose.Connection;
 
@@ -11,9 +11,8 @@ class MongooseServiceChecker implements HealthCheckService {
     this.connection = connection;
   }
 
-  public handleCheck(): HealthStatus {
+  public handleCheck(): IHealthStatus {
     const state = this.connection.readyState;
-    console.log(state);
 
     return {
       state: "connected",

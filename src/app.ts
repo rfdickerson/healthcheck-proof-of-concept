@@ -1,48 +1,46 @@
-"use strict"
 
 import * as express from "express";
-import * as path from "path";
 import * as mongoose from "mongoose";
+import * as path from "path";
 
 import { HealthChecker } from "./healthcheck/HealthChecker";
 import { MongooseServiceChecker } from "./healthcheck/MongooseServiceChecker";
 
-mongoose.connect('mongodb://localhost/healthcheck');
-
+mongoose.connect("mongodb://localhost/healthcheck");
 
 class Server {
-
-  public app: express.Application;
 
   public static bootstrap(): Server {
     return new Server();
   }
+
+  public app: express.Application;
 
   constructor() {
     this.app = express();
     this.config();
   }
 
-  config() {
+  private config() {
     let router: express.Router;
     router = express.Router();
 
-    router.get('/', (req, res, next) => {
-      res.send('Hello world!');
-    })
+    router.get("/", (req, res, next) => {
+      res.send("Hello world!");
+    });
 
-    this.app.use('/', router);
+    this.app.use("/", router);
 
-    let healthChecker = new HealthChecker();
-    let mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
+    const healthChecker = new HealthChecker();
+    const mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
 
     healthChecker.register("mongo", mongoDBCheck);
-    this.app.use('/health', healthChecker.router);
+    this.app.use("/health", healthChecker.router);
   }
 
 }
 
-let server = new Server();
+const server = new Server();
 server.app.listen(3000, "localhost", () => {
-  console.log('Listening on port 3000');
+  // console.log("Listening on port 3000");
 });
