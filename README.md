@@ -33,7 +33,7 @@ All applications must return the following basic payload at the registered healt
 
 ```json
 {
-  state: 'UP'
+  "state": "UP"
 }
 ```
 
@@ -41,15 +41,15 @@ When other services are registered on the health checker, the following informat
 
 ```json
 {
-  state: 'UP',
-  uptime: 100,
-  services: {
-    'mongodb':
+  "state": "UP",
+  "uptime": 100,
+  "services": {
+    "mongodb":
       {
-        state: 'UP'
-        host: 'mongo',
-        username: 'XXX',
-        password: 'XXX'
+        state: "UP"
+        host: "mongo",
+        username: "XXX",
+        password: "XXX"
       }
   }
 }
@@ -59,8 +59,8 @@ When there is an error, or a DOWN state, normally, the payload will contain an e
 
 ```json
 {
-  state: 'DOWN'
-  message: 'Could not allocate port 27017'
+  "state": "DOWN",
+  "message": "Could not allocate port 27017"
 }
 ```
 
