@@ -2,15 +2,22 @@
   "name": "healthcheck-prototype",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "build": "tsc",
-    "pretest": "tsc test/*.ts",
+    "pretest": "tsc ts/test/*.ts",
     "start-dev": "tsc -w && nodemon built/app.js",
     "test": "mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rfdickerson/healthcheck-proof-of-concept"
+  },
+  "keywords": [
+    "healthcheck"
+  ],
+  "author": "Robert F. Dickerson",
+  "license": "Apache",
   "dependencies": {
     "express": "^4.15.3",
     "mongoose": "^4.10.0"
