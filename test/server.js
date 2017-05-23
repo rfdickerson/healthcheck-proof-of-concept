@@ -2,7 +2,7 @@
 function makeServer() {
 
   var express = require("express");
-  var healthcheck = require("../js/index");
+  var healthcheck = require("../lib/index");
   var mongoose = require("mongoose");
 
   const app = express();

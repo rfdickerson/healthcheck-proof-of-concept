@@ -2,7 +2,7 @@
   "name": "health-check",
   "version": "0.0.1",
   "description": "",
-  "main": "js/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test": "tsc && mocha test"

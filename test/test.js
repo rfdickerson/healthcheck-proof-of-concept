@@ -19,8 +19,10 @@
 
 var express = require("express");
 var request = require("supertest");
-var healthcheck = require("../js/index.js");
+var healthcheck = require("../lib/index.js");
 var assert = require("chai").assert;
+
+const healthEndpoint = "/health";
 
 describe("Basic", () => {
 
@@ -37,20 +39,26 @@ describe("Basic", () => {
 
   it("Returns a 200 on health check", () => {
     request(server)
-      .get("/health")
+      .get(healthEndpoint)
       .expect(200);
   });
 
   it("Has state and upTime payload", () => {
     request(server)
-      .get("/health")
+      .get(healthEndpoint)
       .expect(200, (err, res) => {
-
-        console.log(res.body);
-   
+        // console.log(res.body);
         assert.equal(res.body.status, "up");
         assert.isAtLeast(res.body.uptime, 0);
 
+      });
+  });
+
+  it("Has services", () => {
+    request(server)
+      .get(healthEndpoint)
+      .expect(200, (err, res) => {
+        assert.isDefined(res.body.services);
       });
   });
 
