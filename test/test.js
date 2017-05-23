@@ -20,14 +20,14 @@
 var express = require("express");
 var request = require("supertest");
 var healthcheck = require("../js/index.js");
-var assert = require("assert");
+var assert = require("chai").assert;
 
 describe("Basic", () => {
 
-  let server;
+  var server;
 
   beforeEach( () => {
-    server = require("./server");
+    server = require("./server")();
   });
 
   afterEach( (done) => {
@@ -35,9 +35,22 @@ describe("Basic", () => {
     setTimeout(done, 1000);
   });
 
-  it("Returns a health check", () => {
+  it("Returns a 200 on health check", () => {
     request(server)
       .get("/health")
       .expect(200);
   });
+
+  it("Has state and upTime payload", () => {
+    request(server)
+      .get("/health")
+      .expect(200, (err, res) => {
+   
+        assert.equal(res.body.state, "UP");
+        assert.isAtLeast(res.body.upTime, 0);
+
+      });
+  });
+
+
 });

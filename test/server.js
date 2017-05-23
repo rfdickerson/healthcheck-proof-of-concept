@@ -1,26 +1,33 @@
-var express = require("express");
-var healthcheck = require("../js/index");
-var mongoose = require("mongoose");
 
-const app = express();
+function makeServer() {
 
-const healthChecker = new healthcheck.HealthChecker();
-const mongoDBCheck = new healthcheck.MongooseServiceChecker(mongoose.connection);
+  var express = require("express");
+  var healthcheck = require("../js/index");
+  var mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/healthcheck");
+  const app = express();
 
-healthChecker.register("mongo", mongoDBCheck);
+  const healthChecker = new healthcheck.HealthChecker();
+  const mongoDBCheck = new healthcheck.MongooseServiceChecker(mongoose.connection);
 
-app.use("/health", healthChecker.router);
+  mongoose.connect("mongodb://localhost/healthcheck");
 
-app.get("/", (req, res) => {
-  res.status(200).send("ok");
-});
+  healthChecker.register("mongo", mongoDBCheck);
 
-const server = app.listen(3000, () => {
-  const port = server.address().port;
-  console.log("Example app listen at port %s", port);
-});
+  app.use("/health", healthChecker.router);
 
-module.exports = server;
+  app.get("/", (req, res) => {
+    res.status(200).send("ok");
+  });
+
+  const server = app.listen(3000, () => {
+    const port = server.address().port;
+    console.log("Example app listen at port %s", port);
+  });
+
+  return server;
+
+}
+
+module.exports = makeServer;
 
