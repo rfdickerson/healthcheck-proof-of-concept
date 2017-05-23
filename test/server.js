@@ -2,7 +2,7 @@
 function makeServer() {
 
   var express = require("express");
-  var healthcheck = require("../js/index");
+  var healthcheck = require("../lib/index");
   var mongoose = require("mongoose");
 
   const app = express();
@@ -12,13 +12,13 @@ function makeServer() {
   const healthChecker = new healthcheck.HealthChecker();
   const mongoDBCheck = new healthcheck.MongooseServiceChecker(mongoose.connection);
 
-  healthChecker.register("mongo", mongoDBCheck);
+  healthChecker.register("mongoDatabase", mongoDBCheck);
+
+  healthChecker.onCheck( () => {
+    return true;
+  })
 
   app.use("/health", healthChecker.router);
-
-  app.get("/", (req, res) => {
-    res.status(200).send("ok");
-  });
 
   const server = app.listen(3000, () => {
     const port = server.address().port;
