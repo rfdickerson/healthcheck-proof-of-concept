@@ -20,6 +20,7 @@
 import { IHealthStatus } from "./HealthStatus";
 
 interface IHealthCheckService {
+  name?: string;
   handleCheck(): IHealthStatus;
 }
 

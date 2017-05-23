@@ -22,17 +22,25 @@ import * as express from "express";
 import { IHealthCheckService } from "./HealthCheckService";
 import { IHealthStatus } from "./HealthStatus";
 
+interface IServiceList {
+  [index: string]: IHealthCheckService;
+}
+
+interface IServiceHealthList {
+  [index: string]: IHealthStatus;
+}
+
 class HealthChecker {
 
   public router: express.Router;
   private startTime: number;
 
-  private services: IHealthCheckService[];
+  private services: IServiceList;
 
   constructor() {
     this.router = express.Router();
     this.startTime = Date.now();
-    this.services = [];
+    this.services = {};
 
     this.setupRoutes();
   }
@@ -44,15 +52,18 @@ class HealthChecker {
   private setupRoutes() {
     this.router.get("/", (req, res, next) => {
 
-      const upTime = Date.now() - this.startTime;
+      const uptime = Date.now() - this.startTime;
 
-      const servicesStatus = Object.keys(this.services).map((s) => {
-        return [];
+      const x: IServiceHealthList = {};
+
+      Object.keys(this.services).forEach((element) => {
+        x[element] = this.services[element].handleCheck();
       });
 
       const status: IHealthStatus = {
-        state: "UP",
-        upTime,
+        services: x,
+        status: "up",
+        uptime,
       };
 
       res.status(200);

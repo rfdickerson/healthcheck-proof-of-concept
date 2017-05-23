@@ -31,11 +31,22 @@ class MongooseServiceChecker implements IHealthCheckService {
   }
 
   public handleCheck(): IHealthStatus {
+
     const state = this.connection.readyState;
 
     return {
-      state: "connected",
+      status: this.readyStateLabel(state),
     };
+  }
+
+  private readyStateLabel(x: number): string {
+    switch (x) {
+      case 0: return "disconnected";
+      case 1: return "connected";
+      case 2: return "connecting";
+      case 3: return "disconnecting";
+      default: return "";
+    }
   }
 
 }

@@ -45,9 +45,11 @@ describe("Basic", () => {
     request(server)
       .get("/health")
       .expect(200, (err, res) => {
+
+        console.log(res.body);
    
-        assert.equal(res.body.state, "UP");
-        assert.isAtLeast(res.body.upTime, 0);
+        assert.equal(res.body.status, "up");
+        assert.isAtLeast(res.body.uptime, 0);
 
       });
   });

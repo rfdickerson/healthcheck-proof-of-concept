@@ -7,10 +7,10 @@ function makeServer() {
 
   const app = express();
 
+  mongoose.connect("mongodb://localhost/healthcheck");
+
   const healthChecker = new healthcheck.HealthChecker();
   const mongoDBCheck = new healthcheck.MongooseServiceChecker(mongoose.connection);
-
-  mongoose.connect("mongodb://localhost/healthcheck");
 
   healthChecker.register("mongo", mongoDBCheck);
 
@@ -22,7 +22,7 @@ function makeServer() {
 
   const server = app.listen(3000, () => {
     const port = server.address().port;
-    console.log("Example app listen at port %s", port);
+    // console.log("Example app listen at port %s", port);
   });
 
   return server;

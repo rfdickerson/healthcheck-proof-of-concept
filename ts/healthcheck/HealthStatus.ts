@@ -18,9 +18,13 @@
  */
 
 interface IHealthStatus {
-  state: string;
-  upTime?: number;
-  services?: [string, IHealthStatus];
+
+  // up, down, connecting, disconnecting
+  status: string;
+  // up time in milliseconds
+  uptime?: number;
+  // list of services
+  services?: {[s: string]: IHealthStatus};
 }
 
 export { IHealthStatus };

@@ -7,8 +7,17 @@ var MongooseServiceChecker = (function () {
     MongooseServiceChecker.prototype.handleCheck = function () {
         var state = this.connection.readyState;
         return {
-            state: "connected"
+            status: this.readyStateLabel(state)
         };
+    };
+    MongooseServiceChecker.prototype.readyStateLabel = function (x) {
+        switch (x) {
+            case 0: return "disconnected";
+            case 1: return "connected";
+            case 2: return "connecting";
+            case 3: return "disconnecting";
+            default: return "";
+        }
     };
     return MongooseServiceChecker;
 }());
