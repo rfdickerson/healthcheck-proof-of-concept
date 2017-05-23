@@ -26,7 +26,6 @@ interface IServiceHealthList {
 }
 
 interface IHealthCheckService {
-  name?: string;
   handleCheck(): IHealthStatus;
 }
 
@@ -49,6 +48,8 @@ class HealthChecker {
   private services: IServiceList;
   private isUp: boolean;
 
+  private handleCheck: () => boolean;
+
   constructor() {
     this.router = express.Router();
     this.startTime = Date.now();
@@ -59,7 +60,7 @@ class HealthChecker {
   }
 
   /**
-   * Register a new service health check.
+   * register a new service health check.
    * @param name {string}
    * @param checker {IHealthCheckService}
    */
@@ -67,8 +68,12 @@ class HealthChecker {
     this.services[name] = checker;
   }
 
+  public onCheck( f: () => boolean) {
+    this.handleCheck = f;
+  }
+
   /**
-   * Resets the uptime
+   * resets the uptime
    */
   public reset() {
     this.startTime = Date.now();
@@ -77,16 +82,18 @@ class HealthChecker {
   private setupRoutes() {
     this.router.get("/", (req, res, next) => {
 
+      this.isUp = this.handleCheck();
+
       const uptime = Date.now() - this.startTime;
 
-      const x: IServiceHealthList = {};
+      const servicesStatus: IServiceHealthList = {};
 
-      Object.keys(this.services).forEach((element) => {
-        x[element] = this.services[element].handleCheck();
+      Object.keys(this.services).forEach((service) => {
+        servicesStatus[service] = this.services[service].handleCheck();
       });
 
       const status: IHealthStatus = {
-        services: x,
+        services: servicesStatus,
         status: this.isUp ? "up" : "down",
         uptime,
       };
