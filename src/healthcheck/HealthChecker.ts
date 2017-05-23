@@ -82,7 +82,11 @@ class HealthChecker {
   private setupRoutes() {
     this.router.get("/", (req, res, next) => {
 
-      this.isUp = this.handleCheck();
+      if (this.handleCheck) {
+        this.isUp = this.handleCheck();
+      } else {
+        this.isUp = true;
+      }
 
       const uptime = Date.now() - this.startTime;
 
