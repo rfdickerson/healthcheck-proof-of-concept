@@ -52,7 +52,7 @@ All applications will return the following basic payload at the registered healt
 
 ```json
 {
-  "status": "up",
+  "status": "UP",
   "uptime": 100567,
 }
 ```
@@ -61,33 +61,33 @@ When other services are registered on the health checker, the following informat
 
 ```json
 {
-  "status": "up",
+  "status": "UP",
   "uptime": 100567,
   "services": {
     "mongo":
       {
-        "status": "connected",
+        "status": "UP",
       },
     "redis":
       {
-        "status": "connecting"
+        "status": "DOWN"
       }
   }
 }
 ```
 
-When there is an error, accompanying a down or disconnected state, the payload will typically contain an error message:
+When there is an error, accompanying a DOWN state, the payload will typically contain an error message:
 
 ```json
 {
-  "status": "down",
+  "status": "DOWN",
   "errorMessage": "Could not bind to port 3000"
 }
 ```
 
 ```json
 {
-  "status": "disconnected",
+  "status": "DOWN",
   "errorMessage": "Could not connect to port 27017"
 }
 ```
@@ -101,8 +101,8 @@ The services status can take the following values:
 
 - **UP**: The service is connected and operating normally
 - **DOWN**: The service is not connected and perhaps not operating normally
-- **connecting**: Currently trying to establish a connection before moving to the connected state
-- **disconnecting**: Currently moving from the connected state to disconnected state.
+- **CONNECTING**: Currently trying to establish a connection before moving to the connected state
+- **DISCONNECTING**: Currently moving from the connected state to disconnected state.
 
 The application uptime is reported in milliseconds from when the health check service was initialized. 
 
