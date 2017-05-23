@@ -17,19 +17,25 @@ Add the following to your ExpressJS application:
 var healthcheck =  require("healthcheck");
 ```
 
-The following example uses the Mongoose health checker against the MongoDB database connection.
+You can set up your health checker is a custom health check callback:
 
 ```javascript
 // create a health checker
 const healthChecker = new healthcheck.HealthChecker();
+healthChecker.onCheck( () => {
+  // do special checking
+  return true;
+});
 // set up an endpoint at /health
 this.app.use("/health", healthChecker.router);
 ```
 
-## Health Checking Services
+## Add Health Checking Services
 
 Import the service checker for the service you want to check such as MongoDB, Redis, PostgreSQL, etc.
 Add the checker before the health check is invoked. You can create multiple service checkers of the same type but different identifiers.
+
+The following example uses the Mongoose health checker against the MongoDB database connection:
 
 ```javascript
 // create a new Mongoose connection to MongoDB
