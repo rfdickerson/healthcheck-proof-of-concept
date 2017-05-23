@@ -1,6 +1,6 @@
 # Health Checker [![Build Status](https://travis-ci.org/rfdickerson/healthcheck-proof-of-concept.svg?branch=master)](https://travis-ci.org/rfdickerson/healthcheck-proof-of-concept)
 
-A proof-of-concept library for ExpressJS-based applications to add a health checking endpoint and provide a payload with the application's health check status.
+A proof-of-concept library for ExpressJS-based applications to add a health checking endpoint and provide a payload with information about the running application and the connected services.
 
 ## Getting Started
 
@@ -12,82 +12,93 @@ yarn add health-check
 
 Add the following to your ExpressJS application:
 
-```typescript
-import { HealthChecker } from "./healthcheck/HealthChecker";
+```javascript
+// import the library
+var healthcheck =  require("healthcheck");
 ```
 
 The following example uses the Mongoose health checker against the MongoDB database connection.
 
-```typescript
-const healthChecker = new HealthChecker();
-
+```javascript
+// create a health checker
+const healthChecker = new healthcheck.HealthChecker();
+// set up an endpoint at /health
 this.app.use("/health", healthChecker.router);
 ```
 
 ## Health Checking Services
 
-Import the service checker for the service you want to check such as MongoDB, Redis, PostgreSQL, etc.:
+Import the service checker for the service you want to check such as MongoDB, Redis, PostgreSQL, etc.
+Add the checker before the health check is invoked. You can create multiple service checkers of the same type but different identifiers.
 
-```typescript
-import { MongooseServiceChecker } from "./healthcheck/MongooseServiceChecker";
-```
-
-Add the checker before the health check is invoked:
-
-```typescript
-const mongoDBCheck = new MongooseServiceChecker(mongoose.connection);
-healthChecker.register("mongo", mongoDBCheck);
+```javascript
+// create a new Mongoose connection to MongoDB
+mongoose.connect("mongodb://localhost/healthcheck");
+// register the service checker with the Mongoose connection
+const mongoDBCheck = new healthchecker.MongooseServiceChecker(mongoose.connection);
+// choose a name for the service checker as 'mongo-1'
+healthChecker.register("mongo-1", mongoDBCheck);
 ```
 
 ## Health Checking Status
 
-All applications must return the following basic payload at the registered health route:
+All applications will return the following basic payload at the registered health route, such as `/health`:
 
 ```json
 {
-  "state": "UP"
+  "status": "up",
+  "uptime": 100567,
 }
 ```
 
-For more advanced cases, such as when other services are registered on the health checker, the following information can appear:
+When other services are registered on the health checker, the following information can appear:
 
 ```json
 {
-  "state": "UP",
-  "uptime": 100,
+  "status": "up",
+  "uptime": 100567,
   "services": {
-    "mongodb":
+    "mongo":
       {
-        "state": "UP",
-        "host": "mongo",
-        "username": "XXX",
-        "password": "XXX"
+        "state": "connected",
       },
     "redis":
       {
-        "state": "UP"
+        "state": "connecting"
       }
   }
 }
 ```
 
-When there is an error, or a DOWN state, the payload will typically contain an error message:
+When there is an error, accompanying a down or disconnected state, the payload will typically contain an error message:
 
 ```json
 {
-  "state": "DOWN",
-  "message": "Could not allocate port 27017"
+  "state": "down",
+  "errorMessage": "Could not bind to port 3000"
 }
 ```
 
-The state can take the following values:
+```json
+{
+  "state": "disconnected",
+  "errorMessage": "Could not connect to port 27017"
+}
+```
 
-- **UP**: The application or service is up and operating normally
-- **DOWN**: The applicaiton or service is down and not operating normally such as it could not connect to a database or get a port properly.
-- **CONNECTING**: Currently trying to establish a connection before moving to the UP state
-- **DISCONNECTING**: Currently moving from the UP state to DOWN state by disconnecting the network.
+The application status can take the following values:
 
-Uptime is in milliseconds. 
+- **up**: The application is up and operating normally
+- **down**: The application is down and not operating normally
+
+The services status can take the following values:
+
+- **connected**: The service is connected and operating normally
+- **disconnected**: The service is not connected and perhaps not operating normally
+- **connecting**: Currently trying to establish a connection before moving to the connected state
+- **disconnecting**: Currently moving from the connected state to disconnected state.
+
+The application uptime is reported in milliseconds from when the health check service was initialized. 
 
 ## LICENSE
 
