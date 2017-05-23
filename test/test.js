@@ -48,7 +48,7 @@ describe("Basic", () => {
       .get(healthEndpoint)
       .expect(200, (err, res) => {
         // console.log(res.body);
-        assert.equal(res.body.status, "up");
+        assert.equal(res.body.status, "UP");
         assert.isAtLeast(res.body.uptime, 0);
 
       });

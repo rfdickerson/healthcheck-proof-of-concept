@@ -37,10 +37,10 @@ class MongooseServiceChecker implements IHealthCheckService {
 
   private readyStateLabel(x: number): string {
     switch (x) {
-      case 0: return "disconnected";
-      case 1: return "connected";
-      case 2: return "connecting";
-      case 3: return "disconnecting";
+      case 0: return "DOWN";
+      case 1: return "UP";
+      case 2: return "CONNECTING";
+      case 3: return "DISCONNECTING";
       default: return "";
     }
   }

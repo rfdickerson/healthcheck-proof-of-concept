@@ -101,7 +101,7 @@ class HealthChecker {
 
       const status: IHealthStatus = {
         services: servicesStatus,
-        status: this.isUp ? "up" : "down",
+        status: this.isUp ? "UP" : "DOWN",
         uptime: this.isUp ? uptime : 0,
       };
 

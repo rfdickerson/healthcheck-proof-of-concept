@@ -66,11 +66,11 @@ When other services are registered on the health checker, the following informat
   "services": {
     "mongo":
       {
-        "state": "connected",
+        "status": "connected",
       },
     "redis":
       {
-        "state": "connecting"
+        "status": "connecting"
       }
   }
 }
@@ -80,27 +80,27 @@ When there is an error, accompanying a down or disconnected state, the payload w
 
 ```json
 {
-  "state": "down",
+  "status": "down",
   "errorMessage": "Could not bind to port 3000"
 }
 ```
 
 ```json
 {
-  "state": "disconnected",
+  "status": "disconnected",
   "errorMessage": "Could not connect to port 27017"
 }
 ```
 
 The application status can take the following values:
 
-- **up**: The application is up and operating normally
-- **down**: The application is down and not operating normally
+- **UP**: The application is up and operating normally
+- **DOWN**: The application is down and not operating normally
 
 The services status can take the following values:
 
-- **connected**: The service is connected and operating normally
-- **disconnected**: The service is not connected and perhaps not operating normally
+- **UP**: The service is connected and operating normally
+- **DOWN**: The service is not connected and perhaps not operating normally
 - **connecting**: Currently trying to establish a connection before moving to the connected state
 - **disconnecting**: Currently moving from the connected state to disconnected state.
 
