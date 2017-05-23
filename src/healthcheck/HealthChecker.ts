@@ -82,11 +82,14 @@ class HealthChecker {
   private setupRoutes() {
     this.router.get("/", (req, res, next) => {
 
-      if (this.handleCheck) {
-        this.isUp = this.handleCheck();
-      } else {
-        this.isUp = true;
+      const currentState = this.handleCheck ? this.handleCheck() : true;
+
+      // if moving from down to up state
+      if (currentState && !this.isUp) {
+        this.startTime = Date.now();
       }
+
+      this.isUp = currentState;
 
       const uptime = Date.now() - this.startTime;
 
@@ -99,7 +102,7 @@ class HealthChecker {
       const status: IHealthStatus = {
         services: servicesStatus,
         status: this.isUp ? "up" : "down",
-        uptime,
+        uptime: this.isUp ? uptime : 0,
       };
 
       if (this.isUp) {
