@@ -17,12 +17,27 @@
   under the License.
  */
 
-import { HealthChecker } from "../healthcheck/HealthChecker";
-
-import * as assert from "assert";
+var express = require("express");
+var request = require("supertest");
+var healthcheck = require("../js/index.js");
+var assert = require("assert");
 
 describe("Basic", () => {
-  it("Basic check", () => {
-    return true;
+
+  let server;
+
+  beforeEach( () => {
+    server = require("./server");
+  });
+
+  afterEach( (done) => {
+    server.close();
+    setTimeout(done, 1000);
+  });
+
+  it("Returns a health check", () => {
+    request(server)
+      .get("/health")
+      .expect(200);
   });
 });
