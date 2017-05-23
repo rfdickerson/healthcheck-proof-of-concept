@@ -108,7 +108,7 @@ class HealthChecker {
       if (this.isUp) {
         res.status(200);
       } else {
-        res.status(500);
+        res.status(503);
       }
 
       res.json(status);
