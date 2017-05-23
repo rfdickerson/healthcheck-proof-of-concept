@@ -17,12 +17,40 @@
   under the License.
  */
 
-import { HealthChecker } from "../src/healthcheck/HealthChecker";
-
-import * as assert from "assert";
+var express = require("express");
+var request = require("supertest");
+var healthcheck = require("../js/index.js");
+var assert = require("chai").assert;
 
 describe("Basic", () => {
-  it("Basic check", () => {
-    return true;
+
+  var server;
+
+  beforeEach( () => {
+    server = require("./server")();
   });
+
+  afterEach( (done) => {
+    server.close();
+    setTimeout(done, 1000);
+  });
+
+  it("Returns a 200 on health check", () => {
+    request(server)
+      .get("/health")
+      .expect(200);
+  });
+
+  it("Has state and upTime payload", () => {
+    request(server)
+      .get("/health")
+      .expect(200, (err, res) => {
+   
+        assert.equal(res.body.state, "UP");
+        assert.isAtLeast(res.body.upTime, 0);
+
+      });
+  });
+
+
 });

@@ -9,8 +9,8 @@
     "@types/node" "*"
 
 "@types/express-serve-static-core@*":
-  version "4.0.44"
-  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.0.44.tgz#a1c3bd5d80e93c72fba91a03f5412c47f21d4ae7"
+  version "4.0.45"
+  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.0.45.tgz#71bb1f87d7187482d0d8851f5b294458e1c78667"
   dependencies:
     "@types/node" "*"
 
@@ -44,8 +44,8 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "7.0.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.18.tgz#cd67f27d3dc0cfb746f0bdd5e086c4c5d55be173"
+  version "7.0.22"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.22.tgz#4593f4d828bdd612929478ea40c67b4f403ca255"
 
 "@types/serve-static@*":
   version "1.7.31"
@@ -1060,8 +1060,8 @@ mongodb@2.2.26:
     readable-stream "2.2.7"
 
 mongoose@^4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.10.0.tgz#f4ff031f8b9e7105ae62b7cb3d4fc4e00f320b87"
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.10.1.tgz#5982948c51d2174d27b782a89ea502a2a53c9db0"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
@@ -1657,8 +1657,8 @@ type-is@~1.6.15:
     mime-types "~2.1.15"
 
 typescript@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.3.tgz#9639f3c3b40148e8ca97fe08a51dd1891bb6be22"
 
 uid-number@^0.0.6:
   version "0.0.6"
