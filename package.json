@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "tsc && mocha test"
+    "test": "tsc && mocha --reporter spec test"
   },
   "repository": {
     "type": "git",

@@ -16,6 +16,7 @@
 
 import * as express from "express";
 
+// stores the service checkers such as mongo, redis, and postgresql
 interface IServiceList {
   [index: string]: IHealthCheckService;
 }
@@ -30,11 +31,12 @@ interface IHealthCheckService {
 }
 
 interface IHealthStatus {
-
   // up, down, connecting, disconnecting
   status: string;
+
   // up time in milliseconds
   uptime?: number;
+
   // list of services
   services?: {[s: string]: IHealthStatus};
 }
@@ -65,6 +67,13 @@ class HealthChecker {
     this.services[name] = checker;
   }
 
+  /**
+   * Resets the uptime
+   */
+  public reset() {
+    this.startTime = Date.now();
+  }
+
   private setupRoutes() {
     this.router.get("/", (req, res, next) => {
 
@@ -82,7 +91,12 @@ class HealthChecker {
         uptime,
       };
 
-      res.status(200);
+      if (this.isUp) {
+        res.status(200);
+      } else {
+        res.status(500);
+      }
+
       res.json(status);
     });
   }
